@@ -8,8 +8,10 @@ import {
   getProductsByCategory,
   type CategorySlug,
 } from '../data/products'
+import { useLanguage } from '../context/LanguageContext'
 
 export default function Products() {
+  const { t } = useLanguage()
   const [searchParams, setSearchParams] = useSearchParams()
   const initial = (searchParams.get('category') as CategorySlug | 'all') || 'all'
   const [filter, setFilter] = useState<CategorySlug | 'all'>(
@@ -30,18 +32,18 @@ export default function Products() {
   return (
     <>
       <PageHero
-        eyebrow="Catalog"
-        title="Our Products"
-        subtitle="Browse the full Visual Furniture collection. Filter by category to find exactly what your space needs."
+        eyebrow={t('catalog')}
+        title={t('ourProducts')}
+        subtitle={t('catalogSubtitle')}
       />
 
       <section className="py-14 sm:py-16">
         <div className="container-site">
-          <Reveal className="flex flex-wrap gap-2 border-b border-black/8 pb-6">
+          <Reveal className="flex flex-wrap gap-2 border-b border-line pb-6">
             <FilterChip
               active={filter === 'all'}
               onClick={() => setCategory('all')}
-              label="All"
+              label={t('all')}
             />
             {categories.map((cat) => (
               <FilterChip
@@ -55,11 +57,12 @@ export default function Products() {
 
           <Reveal delay={1}>
             <p className="mt-6 text-sm text-muted" key={filter}>
-              Showing {filtered.length} product{filtered.length !== 1 ? 's' : ''}
+              {t('showing')} {filtered.length}{' '}
+              {filtered.length === 1 ? t('product') : t('products')}
               {filter !== 'all' && (
                 <>
                   {' '}
-                  in{' '}
+                  {t('in')}{' '}
                   <span className="font-medium text-ink">
                     {categories.find((c) => c.slug === filter)?.name}
                   </span>
@@ -70,7 +73,7 @@ export default function Products() {
 
           {filtered.length > 0 ? (
             <div
-              className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+              className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
               key={filter}
             >
               {filtered.map((product, i) => (
@@ -78,9 +81,7 @@ export default function Products() {
               ))}
             </div>
           ) : (
-            <p className="mt-16 text-center text-muted">
-              No products in this category yet.
-            </p>
+            <p className="mt-16 text-center text-muted">{t('noProducts')}</p>
           )}
         </div>
       </section>

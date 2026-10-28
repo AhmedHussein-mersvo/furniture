@@ -4,6 +4,8 @@ import { categories, getFeaturedProducts } from '../data/products'
 import ProductCard from '../components/ProductCard'
 import Reveal from '../components/Reveal'
 import CounterUp from '../components/CounterUp'
+import TrustStrip from '../components/TrustStrip'
+import ShowroomSection from '../components/ShowroomSection'
 import { useWhatsApp } from '../context/WhatsAppContext'
 import { useLanguage } from '../context/LanguageContext'
 import heroImg from '../assets/hero.png'
@@ -15,7 +17,6 @@ export default function Home() {
 
   return (
     <>
-      {/* Hero  -  brand first, full-bleed */}
       <section className="relative min-h-[calc(100svh-72px)] overflow-hidden bg-secondary text-white">
         <img
           src={heroImg}
@@ -50,7 +51,7 @@ export default function Home() {
               className="btn-accent gap-2 px-7 py-3.5 text-xs"
             >
               {t('exploreProducts')}
-              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              <ArrowRight className="h-4 w-4" />
             </Link>
             <button
               type="button"
@@ -65,9 +66,10 @@ export default function Home() {
         <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
       </section>
 
+      <TrustStrip />
+
       <CounterUp />
 
-      {/* Categories */}
       <section className="bg-surface py-20 sm:py-24">
         <div className="container-site">
           <Reveal>
@@ -88,7 +90,7 @@ export default function Home() {
               >
                 <Link
                   to={`/products/category/${cat.slug}`}
-                  className="group relative block aspect-[5/3] overflow-hidden bg-secondary"
+                  className="group relative block aspect-[4/5] overflow-hidden bg-secondary sm:aspect-[5/4] lg:aspect-[3/4]"
                 >
                   <img
                     src={cat.image}
@@ -96,12 +98,12 @@ export default function Home() {
                     className="h-full w-full object-cover opacity-70 transition-all duration-700 group-hover:scale-105 group-hover:opacity-50"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                  <div className="absolute inset-x-0 bottom-0 p-6">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
                     <h3 className="font-display text-xl font-bold text-white transition-colors group-hover:text-primary">
                       {cat.name}
                     </h3>
-                    <p className="mt-1 text-sm text-white/60 line-clamp-1">
+                    <p className="mt-1 text-sm text-white/60 line-clamp-2">
                       {cat.description}
                     </p>
                     <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-primary opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
@@ -116,7 +118,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured */}
       <section className="py-20 sm:py-24">
         <div className="container-site">
           <Reveal className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -136,15 +137,16 @@ export default function Home() {
             </Link>
           </Reveal>
 
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {featured.slice(0, 8).map((product, i) => (
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {featured.slice(0, 6).map((product, i) => (
               <ProductCard key={product.id} product={product} index={i} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* Why us */}
+      <ShowroomSection />
+
       <section className="bg-secondary py-20 text-white sm:py-24">
         <div className="container-site">
           <Reveal>
@@ -193,7 +195,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="relative overflow-hidden bg-primary py-16 sm:py-20">
         <div
           className="pointer-events-none absolute inset-0 opacity-30"

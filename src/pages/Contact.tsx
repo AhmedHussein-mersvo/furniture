@@ -2,23 +2,20 @@ import { ExternalLink, Mail, MapPin, MessageCircle, Phone } from 'lucide-react'
 import PageHero from '../components/PageHero'
 import Reveal from '../components/Reveal'
 import { companyInfo } from '../data/products'
+import { MAP_ADDRESS, MAP_EMBED, MAP_LINK } from '../data/site'
 import { useWhatsApp } from '../context/WhatsAppContext'
-
-const MAP_LINK = 'https://maps.app.goo.gl/XtF7PDR1tKgGWtk29'
-const MAP_EMBED =
-  'https://www.google.com/maps?q=29.8418545,31.3407318&hl=en&z=17&output=embed'
-const MAP_ADDRESS =
-  'Youssef Youssef, Helwan Sharkeya, Helwan, Cairo Governorate'
+import { useLanguage } from '../context/LanguageContext'
 
 export default function Contact() {
   const { open: openWhatsApp } = useWhatsApp()
+  const { t } = useLanguage()
 
   return (
     <>
       <PageHero
-        eyebrow="Get in touch"
-        title="Contact Us"
-        subtitle="Reach our team by phone or WhatsApp, or visit us at our Helwan location."
+        eyebrow={t('contact')}
+        title={t('contactUs')}
+        subtitle={t('showroomSubtitle')}
       />
 
       <section className="py-14 sm:py-16">
@@ -26,11 +23,10 @@ export default function Contact() {
           <Reveal className="space-y-8">
             <div>
               <h2 className="font-display text-2xl font-bold text-ink">
-                Let&apos;s talk about your space
+                {t('showroomTitle')}
               </h2>
               <p className="mt-3 leading-relaxed text-muted">
-                Whether you&apos;re furnishing a villa, office, or showroom -
-                we&apos;re ready to help you choose the right pieces.
+                {t('ctaSubtitle')}
               </p>
             </div>
 
@@ -41,7 +37,7 @@ export default function Contact() {
                 </span>
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted">
-                    Phone
+                    {t('callUs')}
                   </p>
                   <a
                     href={`tel:${companyInfo.phone}`}
@@ -57,14 +53,14 @@ export default function Contact() {
                 </span>
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted">
-                    WhatsApp
+                    {t('whatsapp')}
                   </p>
                   <button
                     type="button"
                     onClick={() => openWhatsApp()}
                     className="mt-1 block text-left font-medium text-ink transition-colors hover:text-primary-dark"
                   >
-                    Egypt & UAE numbers
+                    {t('chatOnWhatsApp')}
                   </button>
                 </div>
               </li>
@@ -90,7 +86,7 @@ export default function Contact() {
                 </span>
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted">
-                    Location
+                    {t('showroomEyebrow')}
                   </p>
                   <a
                     href={MAP_LINK}
@@ -111,28 +107,28 @@ export default function Contact() {
                 className="inline-flex items-center gap-2 bg-[#25D366] px-6 py-3.5 text-xs font-bold uppercase tracking-[0.14em] text-white transition-opacity hover:opacity-90"
               >
                 <MessageCircle className="h-4 w-4" />
-                Open WhatsApp
+                {t('whatsappNow')}
               </button>
               <a
                 href={MAP_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 border border-black/15 px-6 py-3.5 text-xs font-bold uppercase tracking-[0.14em] text-ink transition-colors hover:border-secondary hover:bg-secondary hover:text-primary"
+                className="inline-flex items-center gap-2 border border-line px-6 py-3.5 text-xs font-bold uppercase tracking-[0.14em] text-ink transition-colors hover:border-secondary hover:bg-secondary hover:text-primary"
               >
                 <ExternalLink className="h-4 w-4" />
-                Open in Maps
+                {t('getDirections')}
               </a>
             </div>
           </Reveal>
 
           <Reveal
             delay={2}
-            className="flex flex-col overflow-hidden border border-black/8 bg-white"
+            className="flex flex-col overflow-hidden border border-line bg-page"
           >
-            <div className="flex items-center justify-between gap-3 border-b border-black/8 px-5 py-4">
+            <div className="flex items-center justify-between gap-3 border-b border-line px-5 py-4">
               <div>
                 <h3 className="font-display text-lg font-semibold text-ink">
-                  Find us
+                  {t('showroomEyebrow')}
                 </h3>
                 <p className="mt-0.5 text-sm text-muted">Helwan, Cairo</p>
               </div>
@@ -142,12 +138,12 @@ export default function Contact() {
                 rel="noopener noreferrer"
                 className="shrink-0 text-xs font-semibold uppercase tracking-[0.12em] text-primary-dark transition-colors hover:text-ink"
               >
-                Directions
+                {t('getDirections')}
               </a>
             </div>
             <div className="relative min-h-[360px] flex-1 bg-surface sm:min-h-[440px]">
               <iframe
-                title="Visual Furniture location on Google Maps"
+                title={t('showroomMapTitle')}
                 src={MAP_EMBED}
                 className="absolute inset-0 h-full w-full border-0"
                 loading="lazy"

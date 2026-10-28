@@ -21,7 +21,7 @@ interface WhatsAppContextValue {
 }
 
 const DEFAULT_MESSAGE =
-  'Hello Visual Furniture, I would like to inquire about your products.'
+  'Hello Al-Faisal Furniture, I would like to inquire about your products.'
 
 const WhatsAppContext = createContext<WhatsAppContextValue | null>(null)
 
@@ -66,7 +66,7 @@ export function useWhatsApp() {
 }
 
 export function buildProductWhatsAppMessage(productName: string, url: string) {
-  return `Hello Visual Furniture, I'm interested in "${productName}".\n\nProduct link: ${url}`
+  return `Hello Al-Faisal Furniture, I'm interested in "${productName}".\n\nProduct link: ${url}`
 }
 
 export function buildWhatsAppUrl(phone: string, message: string) {

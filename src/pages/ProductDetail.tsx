@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { ArrowLeft, MessageCircle, Phone } from 'lucide-react'
+import { ArrowLeft, MessageCircle, Phone, Ruler, Sparkles, Package } from 'lucide-react'
 import ImageZoom from '../components/ImageZoom'
 import ProductCard from '../components/ProductCard'
 import Reveal from '../components/Reveal'
+import StickyInquireBar from '../components/StickyInquireBar'
 import {
   categories,
   companyInfo,
@@ -14,30 +15,31 @@ import {
   buildProductWhatsAppMessage,
   useWhatsApp,
 } from '../context/WhatsAppContext'
+import { useLanguage } from '../context/LanguageContext'
 
 export default function ProductDetail() {
   const { slug } = useParams<{ slug: string }>()
   const product = slug ? getProductBySlug(slug) : undefined
   const { open: openWhatsApp } = useWhatsApp()
+  const { t } = useLanguage()
   const [activeImage, setActiveImage] = useState(0)
 
   const inquireOnWhatsApp = () => {
     if (!product) return
-    const url = window.location.href
     openWhatsApp({
-      message: buildProductWhatsAppMessage(product.name, url),
+      message: buildProductWhatsAppMessage(product.name, window.location.href),
     })
   }
 
   if (!product) {
     return (
       <section className="container-site py-24 text-center">
-        <h1 className="font-display text-3xl font-bold">Product not found</h1>
+        <h1 className="font-display text-3xl font-bold">{t('noProducts')}</h1>
         <Link
           to="/products"
           className="mt-6 inline-block text-sm font-semibold uppercase tracking-[0.12em] text-primary-dark"
         >
-          Back to products
+          {t('backToProducts')}
         </Link>
       </section>
     )
@@ -52,7 +54,7 @@ export default function ProductDetail() {
 
   return (
     <>
-      <section className="py-10 sm:py-14">
+      <section className="pb-28 pt-10 sm:pt-14 lg:pb-16">
         <div className="container-site">
           <Reveal>
             <Link
@@ -63,14 +65,16 @@ export default function ProductDetail() {
               }
               className="inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-ink"
             >
-              <ArrowLeft className="h-4 w-4" />
-              {category ? `Back to ${category.name}` : 'Back to products'}
+              <ArrowLeft className="h-4 w-4 rtl:rotate-180" />
+              {category
+                ? `${t('backToCategory')} ${category.name}`
+                : t('backToProducts')}
             </Link>
           </Reveal>
 
           <div className="mt-8 grid items-start gap-10 lg:grid-cols-2 lg:gap-14">
-            <Reveal className="w-full">
-              <div className="overflow-hidden border border-black/8 bg-surface">
+            <Reveal className="w-full lg:sticky lg:top-28">
+              <div className="overflow-hidden border border-line bg-surface">
                 <ImageZoom src={currentSrc} alt={product.name} />
               </div>
               {images.length > 1 && (
@@ -106,39 +110,69 @@ export default function ProductDetail() {
                   {category.name}
                 </Link>
               )}
-              <h1 className="mt-3 font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+              <h1 className="mt-3 font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl lg:text-5xl">
                 {product.name}
               </h1>
               <div className="mt-4 h-1 w-14 bg-primary" />
-              <p className="mt-6 text-base leading-relaxed text-muted">
+              <p className="mt-6 text-base leading-relaxed text-muted sm:text-lg">
                 {product.description}
               </p>
 
-              <div className="mt-10 space-y-3 border-t border-black/8 pt-8">
+              <dl className="mt-8 space-y-4 border border-line bg-surface/60 p-5">
+                {[
+                  {
+                    icon: Sparkles,
+                    label: t('materials'),
+                    value: t('materialsValue'),
+                  },
+                  {
+                    icon: Ruler,
+                    label: t('dimensions'),
+                    value: t('dimensionsValue'),
+                  },
+                  {
+                    icon: Package,
+                    label: t('availability'),
+                    value: t('availabilityValue'),
+                  },
+                ].map((row) => (
+                  <div key={row.label} className="flex gap-3">
+                    <row.icon className="mt-0.5 h-4 w-4 shrink-0 text-primary-dark" />
+                    <div>
+                      <dt className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted">
+                        {row.label}
+                      </dt>
+                      <dd className="mt-1 text-sm text-ink">{row.value}</dd>
+                    </div>
+                  </div>
+                ))}
+              </dl>
+
+              <div className="mt-10 space-y-3 border-t border-line pt-8">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ink">
-                  Interested in this piece?
+                  {t('interestedTitle')}
                 </p>
                 <div className="flex flex-wrap gap-3">
                   <button
                     type="button"
                     onClick={inquireOnWhatsApp}
-                    className="inline-flex items-center gap-2 bg-[#25D366] px-5 py-3 text-xs font-bold uppercase tracking-[0.14em] text-white transition-opacity hover:opacity-90"
+                    className="inline-flex items-center gap-2 bg-[#25D366] px-5 py-3.5 text-xs font-bold uppercase tracking-[0.14em] text-white transition-all duration-300 hover:-translate-y-0.5 hover:opacity-95"
                   >
                     <MessageCircle className="h-4 w-4" />
-                    WhatsApp
+                    {t('whatsapp')}
                   </button>
                   <a
                     href={`tel:${companyInfo.phone}`}
-                    className="inline-flex items-center gap-2 bg-secondary px-5 py-3 text-xs font-bold uppercase tracking-[0.14em] text-primary transition-opacity hover:opacity-90"
+                    className="btn-primary gap-2 px-5 py-3.5 text-xs"
                   >
                     <Phone className="h-4 w-4" />
-                    Call {companyInfo.phoneDisplay}
+                    {companyInfo.phoneDisplay}
                   </a>
                   <Link
                     to="/contact"
-                    className="inline-flex items-center gap-2 border border-black/15 px-5 py-3 text-xs font-bold uppercase tracking-[0.14em] text-ink transition-colors hover:border-secondary hover:bg-secondary hover:text-primary"
+                    className="btn-outline gap-2 border-line px-5 py-3.5 text-xs text-ink"
                   >
-                    Contact us
+                    {t('contactUs')}
                   </Link>
                 </div>
               </div>
@@ -148,14 +182,14 @@ export default function ProductDetail() {
       </section>
 
       {related.length > 0 && (
-        <section className="border-t border-black/8 bg-surface py-16">
+        <section className="border-t border-line bg-surface py-16 sm:py-20">
           <div className="container-site">
             <Reveal>
-              <h2 className="font-display text-2xl font-bold tracking-tight text-ink">
-                More from {category?.name}
+              <h2 className="font-display text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+                {t('similarPieces')}
               </h2>
             </Reveal>
-            <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {related.map((p, i) => (
                 <ProductCard key={p.id} product={p} index={i} />
               ))}
@@ -163,6 +197,11 @@ export default function ProductDetail() {
           </div>
         </section>
       )}
+
+      <StickyInquireBar
+        productName={product.name}
+        onWhatsApp={inquireOnWhatsApp}
+      />
     </>
   )
 }
