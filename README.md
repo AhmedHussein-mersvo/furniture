@@ -1,6 +1,6 @@
-# 🚀 Project Title
+# 🪑 Visual Furniture
 
-A brief, one-to-two sentence description of what your React application does and the problem it solves. 
+An interactive web application designed to help users browse, customize, and visually organize furniture arrangements in real-time. 
 
 ## 🌐 Live Demo
 Check out the live application here: **[Live Demo Link](https://github.io)**
@@ -9,19 +9,17 @@ Check out the live application here: **[Live Demo Link](https://github.io)**
 
 ## ✨ Features
 
-* **Feature 1:** Short explanation of a core user action or capability.
-* **Feature 2:** Short explanation of another major dynamic piece of logic.
-* **Responsive Design:** Optimized for mobile, tablet, and desktop viewports.
+* **3D/Visual Preview:** Interactive viewer to inspect furniture pieces before customizing.
+* **Material Customization:** Change fabrics, wood finishes, and colors instantly on screen.
+* **Responsive Layout:** Smooth user experience optimized for desktop, tablet, and mobile screens.
 
 ---
 
 ## 🛠️ Tech Stack
 
-* **Frontend:** React, TypeScript / JavaScript
-* **State Management:** Context API / Redux Toolkit
-* **Styling:** Tailwind CSS / Styled Components / CSS Modules
-* **Routing:** React Router Dom
-* **API Fetching:** Axios / Fetch API
+* **Frontend:** React (Vite / Create React App)
+* **Styling:** Tailwind CSS / Styled Components
+* **Assets:** Optimized product images and mockups
 
 ---
 
@@ -31,7 +29,7 @@ Follow these steps to set up the project locally on your machine.
 
 ### Prerequisites
 
-Make sure you have **Node.js** and **npm** (or yarn) installed.
+Make sure you have **Node.js** and **npm** installed.
 
 ### Installation
 
@@ -42,7 +40,7 @@ Make sure you have **Node.js** and **npm** (or yarn) installed.
 
 2. Navigate into the project directory:
    ```bash
-   cd your-repo-name
+   cd furniture
    ```
 
 3. Install the dependencies:
@@ -56,37 +54,19 @@ To start the development server locally:
 ```bash
 npm run dev
 ```
-_Note: If your project was built using Create React App instead of Vite, use `npm start`._
+*(Use `npm start` if your project was created with Create React App instead of Vite)*
 
-The application should now be running on **`http://localhost:5173`** (Vite) or **`http://localhost:3000`** (CRA).
+The application should now be running locally on your browser.
 
 ---
 
 ## 📦 Production & Deployment
 
 ### Building for Production
-To create an optimized production build in the `dist` or `build` folder:
+To create an optimized production build:
 ```bash
 npm run build
 ```
-
-### Deploying to GitHub Pages (Optional)
-If you are deploying using the `gh-pages` package:
-```bash
-npm run deploy
-```
-
----
-
-## 🤝 Contributing
-
-Contributions are what make the open-source community such an amazing place to learn, inspire, and create. 
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
 ---
 
