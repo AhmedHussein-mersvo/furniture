@@ -1,6 +1,7 @@
 import { MessageCircle, Phone, X } from 'lucide-react'
 import { companyInfo } from '../data/products'
 import { buildWhatsAppUrl, useWhatsApp } from '../context/WhatsAppContext'
+import { useLanguage } from '../context/LanguageContext'
 
 function FlagEG({ className = 'w-7 h-5' }: { className?: string }) {
   return (
@@ -26,25 +27,31 @@ function FlagAE({ className = 'w-7 h-5' }: { className?: string }) {
 
 export default function WhatsAppPopup() {
   const { isOpen, close, message } = useWhatsApp()
+  const { t, lang } = useLanguage()
 
   if (!isOpen) return null
 
+  const labels: Record<string, string> = {
+    eg: lang === 'ar' ? 'مصر' : 'Egypt',
+    ae: lang === 'ar' ? 'الإمارات' : 'United Arab Emirates',
+  }
+
   return (
     <div
-      className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center p-4"
+      className="fixed inset-0 z-[60] flex items-end justify-center p-4 sm:items-center"
       role="dialog"
       aria-modal="true"
       aria-labelledby="whatsapp-dialog-title"
     >
       <button
         type="button"
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm animate-fade-in"
-        aria-label="Close WhatsApp dialog"
+        className="absolute inset-0 animate-fade-in bg-black/55 backdrop-blur-sm"
+        aria-label={t('closeMenu')}
         onClick={close}
       />
 
-      <div className="relative w-full max-w-md bg-white shadow-2xl overflow-hidden animate-popup">
-        <div className="bg-secondary px-6 py-5 flex items-start justify-between gap-4">
+      <div className="animate-popup relative w-full max-w-md overflow-hidden border border-line bg-page shadow-2xl">
+        <div className="flex items-start justify-between gap-4 bg-secondary px-6 py-5">
           <div className="flex items-center gap-3">
             <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#25D366] text-white">
               <MessageCircle className="h-5 w-5" strokeWidth={2} />
@@ -52,26 +59,26 @@ export default function WhatsAppPopup() {
             <div>
               <h2
                 id="whatsapp-dialog-title"
-                className="font-display text-lg font-bold text-white tracking-wide"
+                className="font-display text-lg font-bold tracking-wide text-white"
               >
-                Chat on WhatsApp
+                {t('chatOnWhatsApp')}
               </h2>
-              <p className="text-sm text-white/65 mt-0.5">
-                Choose your preferred number
+              <p className="mt-0.5 text-sm text-white/65">
+                {t('chooseNumber')}
               </p>
             </div>
           </div>
           <button
             type="button"
             onClick={close}
-            className="text-white/70 hover:text-white transition-colors p-1"
-            aria-label="Close"
+            className="p-1 text-white/70 transition-colors hover:text-white"
+            aria-label={t('closeMenu')}
           >
             <X className="h-5 w-5" />
           </button>
         </div>
 
-        <div className="p-5 space-y-3">
+        <div className="space-y-3 p-5">
           {companyInfo.whatsapp.map((contact) => (
             <a
               key={contact.id}
@@ -79,16 +86,16 @@ export default function WhatsAppPopup() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={close}
-              className="group flex items-center gap-4 border border-black/8 px-4 py-4 transition-all duration-300 hover:border-primary hover:bg-primary/8"
+              className="group flex items-center gap-4 border border-line bg-surface px-4 py-4 transition-all duration-300 hover:border-primary hover:bg-primary/10"
             >
-              <span className="shrink-0 overflow-hidden rounded-sm border border-black/10 shadow-sm">
+              <span className="shrink-0 overflow-hidden rounded-sm border border-line shadow-sm">
                 {contact.id === 'eg' ? <FlagEG /> : <FlagAE />}
               </span>
-              <span className="flex-1 min-w-0">
+              <span className="min-w-0 flex-1">
                 <span className="block font-display font-semibold text-ink">
-                  {contact.label}
+                  {labels[contact.id] ?? contact.label}
                 </span>
-                <span className="block text-sm text-muted mt-0.5 tracking-wide">
+                <span className="mt-0.5 block text-sm tracking-wide text-muted">
                   {contact.display}
                 </span>
               </span>
@@ -101,14 +108,16 @@ export default function WhatsAppPopup() {
           <a
             href={`tel:${companyInfo.phone}`}
             onClick={close}
-            className="group flex items-center gap-4 border border-black/8 px-4 py-4 transition-all duration-300 hover:border-secondary hover:bg-black/[0.03]"
+            className="group flex items-center gap-4 border border-line bg-surface px-4 py-4 transition-all duration-300 hover:border-secondary hover:bg-secondary/5"
           >
             <span className="flex h-9 w-9 items-center justify-center rounded-full bg-secondary text-primary">
               <Phone className="h-4 w-4" />
             </span>
-            <span className="flex-1 min-w-0">
-              <span className="block font-display font-semibold text-ink">Call Us</span>
-              <span className="block text-sm text-muted mt-0.5 tracking-wide">
+            <span className="min-w-0 flex-1">
+              <span className="block font-display font-semibold text-ink">
+                {t('callUs')}
+              </span>
+              <span className="mt-0.5 block text-sm tracking-wide text-muted">
                 {companyInfo.phoneDisplay}
               </span>
             </span>
@@ -116,8 +125,8 @@ export default function WhatsAppPopup() {
         </div>
 
         <div className="px-5 pb-5">
-          <p className="text-xs text-muted text-center leading-relaxed">
-            Our team typically replies within minutes during business hours.
+          <p className="text-center text-xs leading-relaxed text-muted">
+            {t('whatsappReplyHint')}
           </p>
         </div>
       </div>

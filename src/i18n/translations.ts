@@ -93,6 +93,9 @@ export const translations = {
     filter: 'Filter',
     filterByCategory: 'Filter by category',
     closeFilter: 'Close filter',
+    chooseNumber: 'Choose your preferred number',
+    whatsappReplyHint:
+      'Our team typically replies within minutes during business hours.',
   },
   ar: {
     home: 'الرئيسية',
@@ -188,6 +191,9 @@ export const translations = {
     filter: 'تصفية',
     filterByCategory: 'تصفية حسب القسم',
     closeFilter: 'إغلاق التصفية',
+    chooseNumber: 'اختر الرقم المناسب لك',
+    whatsappReplyHint:
+      'يرد فريقنا عادةً خلال دقائق في أوقات العمل.',
   },
 } as const
 
