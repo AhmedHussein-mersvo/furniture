@@ -30,7 +30,7 @@ export const translations = {
     viewCollection: 'View collection',
     highlights: 'Highlights',
     featuredPieces: 'Featured pieces',
-    whyVisual: 'Why Al-Faisal',
+    whyVisual: 'Our promise',
     whyTitle: 'Design that feels intentional',
     whyCuratedTitle: 'Curated collections',
     whyCuratedText:
@@ -125,7 +125,7 @@ export const translations = {
     viewCollection: 'عرض المجموعة',
     highlights: 'مختارات',
     featuredPieces: 'قطع مميزة',
-    whyVisual: 'لماذا الفيصل',
+    whyVisual: 'وعدنا',
     whyTitle: 'تصميم مقصود بعناية',
     whyCuratedTitle: 'مجموعات منتقاة',
     whyCuratedText:
