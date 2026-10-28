@@ -13,22 +13,22 @@ export default function TrustStrip() {
   const { t } = useLanguage()
 
   return (
-    <section className="border-y border-line bg-page py-10 sm:py-12">
-      <div className="container-site grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+    <section className="border-y border-line bg-page py-8 sm:py-12">
+      <div className="container-site grid grid-cols-2 gap-x-3 gap-y-6 sm:gap-x-6 sm:gap-y-8 lg:grid-cols-4 lg:gap-6">
         {items.map((item, i) => (
           <Reveal
             key={item.titleKey}
             delay={Math.min(i, 5) as 0 | 1 | 2 | 3 | 4 | 5}
-            className="flex gap-4"
+            className="flex flex-col gap-2.5 sm:flex-row sm:gap-4"
           >
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center bg-secondary text-primary">
-              <item.icon className="h-5 w-5" strokeWidth={1.75} />
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center bg-secondary text-primary sm:h-11 sm:w-11">
+              <item.icon className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={1.75} />
             </span>
-            <div>
-              <h3 className="font-display text-sm font-semibold tracking-wide text-ink">
+            <div className="min-w-0">
+              <h3 className="font-display text-xs font-semibold tracking-wide text-ink sm:text-sm">
                 {t(item.titleKey)}
               </h3>
-              <p className="mt-1 text-sm leading-relaxed text-muted">
+              <p className="mt-1 text-[11px] leading-snug text-muted sm:text-sm sm:leading-relaxed">
                 {t(item.textKey)}
               </p>
             </div>

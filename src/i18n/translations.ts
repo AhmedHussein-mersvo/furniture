@@ -90,6 +90,9 @@ export const translations = {
     in: 'in',
     noProducts: 'No products in this category yet.',
     categoryLabel: 'Category',
+    filter: 'Filter',
+    filterByCategory: 'Filter by category',
+    closeFilter: 'Close filter',
   },
   ar: {
     home: 'الرئيسية',
@@ -182,6 +185,9 @@ export const translations = {
     in: 'في',
     noProducts: 'لا توجد منتجات في هذا القسم بعد.',
     categoryLabel: 'القسم',
+    filter: 'تصفية',
+    filterByCategory: 'تصفية حسب القسم',
+    closeFilter: 'إغلاق التصفية',
   },
 } as const
 

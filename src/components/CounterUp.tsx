@@ -47,17 +47,19 @@ function StatItem({
 
   return (
     <div
-      className={`reveal border-t border-white/15 pt-8 text-center first:border-t-0 first:pt-0 sm:border-t-0 sm:pt-0 lg:px-8 ${active ? 'is-visible' : ''}`}
+      className={`reveal border border-white/10 p-4 text-center sm:border-0 sm:p-0 lg:px-8 ${active ? 'is-visible' : ''}`}
       style={{ transitionDelay: `${delay * 80}ms` }}
     >
-      <p className="font-display text-4xl font-bold tracking-tight text-primary sm:text-5xl">
+      <p className="font-display text-2xl font-bold tracking-tight text-primary sm:text-4xl lg:text-5xl">
         {count}
         {stat.suffix ?? ''}
       </p>
-      <p className="mt-3 text-xs font-semibold uppercase tracking-[0.2em] text-white">
+      <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-white sm:mt-3 sm:text-xs sm:tracking-[0.2em]">
         {stat.label}
       </p>
-      <p className="mt-2 text-sm text-white/50">{stat.hint}</p>
+      <p className="mt-1.5 text-[11px] leading-snug text-white/50 sm:mt-2 sm:text-sm">
+        {stat.hint}
+      </p>
     </div>
   )
 }
@@ -68,7 +70,7 @@ export default function CounterUp() {
   return (
     <section
       ref={ref}
-      className="relative overflow-hidden bg-secondary py-16 text-white sm:py-20"
+      className="relative overflow-hidden bg-secondary py-12 text-white sm:py-20"
       aria-label="Company highlights"
     >
       <div
@@ -79,7 +81,7 @@ export default function CounterUp() {
         }}
       />
       <div className="relative container-site">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-0 lg:divide-x lg:divide-white/15">
+        <div className="grid grid-cols-2 gap-3 sm:gap-10 lg:grid-cols-4 lg:gap-0 lg:divide-x lg:divide-white/15">
           {stats.map((stat, i) => (
             <StatItem key={stat.label} stat={stat} active={visible} delay={i} />
           ))}

@@ -82,7 +82,7 @@ export default function Home() {
             <p className="mt-3 max-w-lg text-muted">{t('shopByCategorySub')}</p>
           </Reveal>
 
-          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          <div className="mt-12 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-5">
             {categories.map((cat, i) => (
               <Reveal
                 key={cat.slug}
@@ -90,7 +90,7 @@ export default function Home() {
               >
                 <Link
                   to={`/products/category/${cat.slug}`}
-                  className="group relative block aspect-[4/5] overflow-hidden bg-secondary sm:aspect-[5/4] lg:aspect-[3/4]"
+                  className="group relative block aspect-[3/4] overflow-hidden bg-secondary sm:aspect-[5/4] lg:aspect-[3/4]"
                 >
                   <img
                     src={cat.image}
@@ -99,11 +99,11 @@ export default function Home() {
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
-                  <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
-                    <h3 className="font-display text-xl font-bold text-white transition-colors group-hover:text-primary">
+                  <div className="absolute inset-x-0 bottom-0 p-3 sm:p-6">
+                    <h3 className="font-display text-base font-bold text-white transition-colors group-hover:text-primary sm:text-xl">
                       {cat.name}
                     </h3>
-                    <p className="mt-1 text-sm text-white/60 line-clamp-2">
+                    <p className="mt-1 line-clamp-2 text-xs text-white/60 sm:text-sm">
                       {cat.description}
                     </p>
                     <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-primary opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
@@ -137,7 +137,7 @@ export default function Home() {
             </Link>
           </Reveal>
 
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-12 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3 lg:gap-6">
             {featured.slice(0, 6).map((product, i) => (
               <ProductCard key={product.id} product={product} index={i} />
             ))}

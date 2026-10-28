@@ -2,6 +2,7 @@ import { Link, useParams } from 'react-router-dom'
 import PageHero from '../components/PageHero'
 import ProductCard from '../components/ProductCard'
 import Reveal from '../components/Reveal'
+import FloatingCategoryFilter from '../components/FloatingCategoryFilter'
 import {
   getCategoryBySlug,
   getProductsByCategory,
@@ -55,7 +56,7 @@ export default function Category() {
           </Reveal>
 
           {products.length > 0 ? (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3 lg:gap-6">
               {products.map((product, i) => (
                 <ProductCard key={product.id} product={product} index={i} />
               ))}
@@ -65,6 +66,9 @@ export default function Category() {
           )}
         </div>
       </section>
+
+      <FloatingCategoryFilter active={category.slug} />
     </>
   )
 }
+

@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import PageHero from '../components/PageHero'
 import ProductCard from '../components/ProductCard'
 import Reveal from '../components/Reveal'
+import FloatingCategoryFilter from '../components/FloatingCategoryFilter'
 import {
   categories,
   getProductsByCategory,
@@ -73,7 +74,7 @@ export default function Products() {
 
           {filtered.length > 0 ? (
             <div
-              className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+              className="mt-8 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3 lg:gap-6"
               key={filter}
             >
               {filtered.map((product, i) => (
@@ -85,6 +86,8 @@ export default function Products() {
           )}
         </div>
       </section>
+
+      <FloatingCategoryFilter active={filter} onSelect={setCategory} />
     </>
   )
 }

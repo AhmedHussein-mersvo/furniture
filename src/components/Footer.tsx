@@ -12,8 +12,8 @@ export default function Footer() {
   return (
     <footer className="bg-secondary text-white">
       <div className="container-site pt-16 pb-10">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
-          <div className="lg:col-span-1">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4 lg:gap-12">
+          <div className="col-span-2 lg:col-span-1">
             <Logo onDark />
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/60">
               {t('footerBlurb')}
@@ -68,7 +68,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div>
+          <div className="col-span-2 lg:col-span-1">
             <h3 className="font-display text-sm font-bold uppercase tracking-[0.18em] text-primary">
               {t('contact')}
             </h3>
@@ -96,7 +96,7 @@ export default function Footer() {
                 </a>
               </li>
             </ul>
-            <ul className="mt-6 space-y-2.5 border-t border-white/10 pt-5">
+            <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 border-t border-white/10 pt-5 sm:block sm:space-y-2.5">
               <li>
                 <Link
                   to="/privacy"
