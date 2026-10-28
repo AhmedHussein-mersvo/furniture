@@ -10,9 +10,10 @@ import {
   type CategorySlug,
 } from '../data/products'
 import { useLanguage } from '../context/LanguageContext'
+import { getCategoryName } from '../i18n/catalog'
 
 export default function Products() {
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
   const [searchParams, setSearchParams] = useSearchParams()
   const initial = (searchParams.get('category') as CategorySlug | 'all') || 'all'
   const [filter, setFilter] = useState<CategorySlug | 'all'>(
@@ -51,7 +52,7 @@ export default function Products() {
                 key={cat.slug}
                 active={filter === cat.slug}
                 onClick={() => setCategory(cat.slug)}
-                label={cat.name}
+                label={getCategoryName(cat.slug, lang)}
               />
             ))}
           </Reveal>
@@ -65,7 +66,7 @@ export default function Products() {
                   {' '}
                   {t('in')}{' '}
                   <span className="font-medium text-ink">
-                    {categories.find((c) => c.slug === filter)?.name}
+                    {getCategoryName(filter, lang)}
                   </span>
                 </>
               )}

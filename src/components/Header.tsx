@@ -5,6 +5,7 @@ import { categories, companyInfo } from '../data/products'
 import { useWhatsApp } from '../context/WhatsAppContext'
 import { useLanguage } from '../context/LanguageContext'
 import { useTheme } from '../context/ThemeContext'
+import { getCategoryName } from '../i18n/catalog'
 import Logo from './Logo'
 import TopBar from './TopBar'
 
@@ -19,7 +20,7 @@ export default function Header() {
   const dropdownRef = useRef<HTMLDivElement>(null)
   const location = useLocation()
   const { open: openWhatsApp } = useWhatsApp()
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
   const { isDark } = useTheme()
 
   useEffect(() => {
@@ -129,7 +130,7 @@ export default function Header() {
                           className="block px-5 py-2.5 text-sm text-ink/80 transition-all duration-300 hover:translate-x-1 hover:bg-primary hover:text-secondary dark:text-white/80 rtl:hover:-translate-x-1"
                           onClick={() => setDropdownOpen(false)}
                         >
-                          {cat.name}
+                          {getCategoryName(cat.slug, lang)}
                         </Link>
                       </li>
                     ))}
@@ -217,7 +218,7 @@ export default function Header() {
                         to={`/products/category/${cat.slug}`}
                         className="block px-3 py-2.5 text-sm text-ink/65 transition-colors hover:text-ink dark:text-white/65 dark:hover:text-primary"
                       >
-                        {cat.name}
+                        {getCategoryName(cat.slug, lang)}
                       </Link>
                     </li>
                   ))}

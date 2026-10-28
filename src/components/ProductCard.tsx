@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom'
 import type { Product } from '../data/products'
 import { categories } from '../data/products'
 import { useLanguage } from '../context/LanguageContext'
+import {
+  getCategoryName,
+  localizeProduct,
+} from '../i18n/catalog'
 import Reveal from './Reveal'
 
 interface ProductCardProps {
@@ -11,9 +15,10 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, index = 0 }: ProductCardProps) {
+  const { t, lang } = useLanguage()
+  const localized = localizeProduct(product, lang)
   const category = categories.find((c) => c.slug === product.category)
   const delay = Math.min(index % 6, 5) as 0 | 1 | 2 | 3 | 4 | 5
-  const { t } = useLanguage()
 
   return (
     <Reveal
@@ -27,13 +32,13 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
       >
         <img
           src={product.image}
-          alt={product.name}
+          alt={localized.name}
           className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
           loading="lazy"
         />
         {category && (
           <span className="absolute start-2 top-2 bg-secondary/90 px-1.5 py-0.5 text-[9px] font-medium uppercase tracking-[0.12em] text-primary sm:start-3 sm:top-3 sm:px-2.5 sm:py-1 sm:text-[11px] sm:tracking-[0.14em]">
-            {category.name}
+            {getCategoryName(category.slug, lang)}
           </span>
         )}
         <span className="absolute inset-x-0 bottom-0 hidden translate-y-full bg-gradient-to-t from-black/70 to-transparent p-4 pt-10 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100 sm:block">
@@ -50,11 +55,11 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
             to={`/products/${product.slug}`}
             className="transition-colors hover:text-primary-dark"
           >
-            {product.name}
+            {localized.name}
           </Link>
         </h3>
         <p className="mt-1.5 line-clamp-2 flex-1 text-xs leading-relaxed text-muted sm:mt-2 sm:text-sm">
-          {product.shortDescription}
+          {localized.shortDescription}
         </p>
         <Link
           to={`/products/${product.slug}`}

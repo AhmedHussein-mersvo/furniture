@@ -3,11 +3,12 @@ import { Mail, MapPin, Phone } from 'lucide-react'
 import { categories, companyInfo } from '../data/products'
 import { useWhatsApp } from '../context/WhatsAppContext'
 import { useLanguage } from '../context/LanguageContext'
+import { getCategoryName } from '../i18n/catalog'
 import Logo from './Logo'
 
 export default function Footer() {
   const { open: openWhatsApp } = useWhatsApp()
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
 
   return (
     <footer className="bg-secondary text-white">
@@ -61,7 +62,7 @@ export default function Footer() {
                     to={`/products/category/${cat.slug}`}
                     className="text-sm text-white/65 transition-colors hover:text-primary"
                   >
-                    {cat.name}
+                    {getCategoryName(cat.slug, lang)}
                   </Link>
                 </li>
               ))}

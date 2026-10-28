@@ -16,18 +16,23 @@ import {
   useWhatsApp,
 } from '../context/WhatsAppContext'
 import { useLanguage } from '../context/LanguageContext'
+import {
+  getCategoryName,
+  localizeProduct,
+} from '../i18n/catalog'
 
 export default function ProductDetail() {
   const { slug } = useParams<{ slug: string }>()
   const product = slug ? getProductBySlug(slug) : undefined
   const { open: openWhatsApp } = useWhatsApp()
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
   const [activeImage, setActiveImage] = useState(0)
+  const localized = product ? localizeProduct(product, lang) : undefined
 
   const inquireOnWhatsApp = () => {
-    if (!product) return
+    if (!localized) return
     openWhatsApp({
-      message: buildProductWhatsAppMessage(product.name, window.location.href),
+      message: buildProductWhatsAppMessage(localized.name, window.location.href),
     })
   }
 
@@ -46,6 +51,9 @@ export default function ProductDetail() {
   }
 
   const category = categories.find((c) => c.slug === product.category)
+  const categoryLabel = category
+    ? getCategoryName(category.slug, lang)
+    : undefined
   const related = getProductsByCategory(product.category)
     .filter((p) => p.id !== product.id)
     .slice(0, 3)
@@ -66,8 +74,8 @@ export default function ProductDetail() {
               className="inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-ink"
             >
               <ArrowLeft className="h-4 w-4 rtl:rotate-180" />
-              {category
-                ? `${t('backToCategory')} ${category.name}`
+              {categoryLabel
+                ? `${t('backToCategory')} ${categoryLabel}`
                 : t('backToProducts')}
             </Link>
           </Reveal>
@@ -75,7 +83,7 @@ export default function ProductDetail() {
           <div className="mt-8 grid items-start gap-10 lg:grid-cols-2 lg:gap-14">
             <Reveal className="w-full lg:sticky lg:top-28">
               <div className="overflow-hidden border border-line bg-surface">
-                <ImageZoom src={currentSrc} alt={product.name} />
+                <ImageZoom src={currentSrc} alt={localized!.name} />
               </div>
               {images.length > 1 && (
                 <div className="mt-3 flex gap-2">
@@ -102,20 +110,20 @@ export default function ProductDetail() {
             </Reveal>
 
             <Reveal delay={2} className="flex flex-col">
-              {category && (
+              {category && categoryLabel && (
                 <Link
                   to={`/products/category/${category.slug}`}
                   className="text-xs font-semibold uppercase tracking-[0.2em] text-primary-dark"
                 >
-                  {category.name}
+                  {categoryLabel}
                 </Link>
               )}
               <h1 className="mt-3 font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-                {product.name}
+                {localized!.name}
               </h1>
               <div className="mt-4 h-1 w-14 bg-primary" />
               <p className="mt-6 text-base leading-relaxed text-muted sm:text-lg">
-                {product.description}
+                {localized!.description}
               </p>
 
               <dl className="mt-8 space-y-4 border border-line bg-surface/60 p-5">
@@ -199,7 +207,7 @@ export default function ProductDetail() {
       )}
 
       <StickyInquireBar
-        productName={product.name}
+        productName={localized!.name}
         onWhatsApp={inquireOnWhatsApp}
       />
     </>

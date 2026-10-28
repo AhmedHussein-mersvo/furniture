@@ -8,12 +8,13 @@ import TrustStrip from '../components/TrustStrip'
 import ShowroomSection from '../components/ShowroomSection'
 import { useWhatsApp } from '../context/WhatsAppContext'
 import { useLanguage } from '../context/LanguageContext'
+import { localizeCategory } from '../i18n/catalog'
 import heroImg from '../assets/hero.png'
 
 export default function Home() {
   const featured = getFeaturedProducts()
   const { open: openWhatsApp } = useWhatsApp()
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
 
   return (
     <>
@@ -83,7 +84,9 @@ export default function Home() {
           </Reveal>
 
           <div className="mt-12 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-5">
-            {categories.map((cat, i) => (
+            {categories.map((cat, i) => {
+              const localized = localizeCategory(cat, lang)
+              return (
               <Reveal
                 key={cat.slug}
                 delay={Math.min(i % 6, 5) as 0 | 1 | 2 | 3 | 4 | 5}
@@ -94,17 +97,17 @@ export default function Home() {
                 >
                   <img
                     src={cat.image}
-                    alt={cat.name}
+                    alt={localized.name}
                     className="h-full w-full object-cover opacity-70 transition-all duration-700 group-hover:scale-105 group-hover:opacity-50"
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
                   <div className="absolute inset-x-0 bottom-0 p-3 sm:p-6">
                     <h3 className="font-display text-base font-bold text-white transition-colors group-hover:text-primary sm:text-xl">
-                      {cat.name}
+                      {localized.name}
                     </h3>
                     <p className="mt-1 line-clamp-2 text-xs text-white/60 sm:text-sm">
-                      {cat.description}
+                      {localized.description}
                     </p>
                     <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-primary opacity-0 translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
                       {t('viewCollection')}{' '}
@@ -113,7 +116,8 @@ export default function Home() {
                   </div>
                 </Link>
               </Reveal>
-            ))}
+              )
+            })}
           </div>
         </div>
       </section>

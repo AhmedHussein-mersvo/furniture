@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Filter, X } from 'lucide-react'
 import { categories, type CategorySlug } from '../data/products'
 import { useLanguage } from '../context/LanguageContext'
+import { getCategoryName } from '../i18n/catalog'
 
 type FilterValue = CategorySlug | 'all'
 
@@ -19,7 +20,7 @@ export default function FloatingCategoryFilter({
   onSelect,
   showAfter = 220,
 }: FloatingCategoryFilterProps) {
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
   const navigate = useNavigate()
   const panelId = useId()
   const [visible, setVisible] = useState(false)
@@ -66,13 +67,14 @@ export default function FloatingCategoryFilter({
   }
 
   const activeLabel =
-    active === 'all'
-      ? t('all')
-      : categories.find((c) => c.slug === active)?.name ?? t('filter')
+    active === 'all' ? t('all') : getCategoryName(active, lang)
 
   const options: { slug: FilterValue; label: string }[] = [
     { slug: 'all', label: t('all') },
-    ...categories.map((c) => ({ slug: c.slug as FilterValue, label: c.name })),
+    ...categories.map((c) => ({
+      slug: c.slug as FilterValue,
+      label: getCategoryName(c.slug, lang),
+    })),
   ]
 
   return (

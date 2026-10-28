@@ -9,16 +9,18 @@ import {
   type CategorySlug,
 } from '../data/products'
 import { useLanguage } from '../context/LanguageContext'
+import { localizeCategory } from '../i18n/catalog'
 
 export default function Category() {
   const { slug } = useParams<{ slug: string }>()
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
   const category = slug ? getCategoryBySlug(slug) : undefined
+  const localized = category ? localizeCategory(category, lang) : undefined
   const products = category
     ? getProductsByCategory(category.slug as CategorySlug)
     : []
 
-  if (!category) {
+  if (!category || !localized) {
     return (
       <section className="container-site py-24 text-center">
         <h1 className="font-display text-3xl font-bold">{t('noProducts')}</h1>
@@ -36,8 +38,8 @@ export default function Category() {
     <>
       <PageHero
         eyebrow={t('categoryLabel')}
-        title={category.name}
-        subtitle={category.description}
+        title={localized.name}
+        subtitle={localized.description}
       />
 
       <section className="py-14 sm:py-16">
